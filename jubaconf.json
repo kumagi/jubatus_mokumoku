@@ -15,7 +15,7 @@
           "sample_weight" : "log_tf",
           "global_weight" : "idf"
       }
-    ],
+    ]
   },
   "parameter" : {
     "regularization_weight" : 1.0
