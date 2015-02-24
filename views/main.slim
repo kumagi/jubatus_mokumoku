@@ -1,0 +1,49 @@
+html
+  head
+    title
+      |嘘新聞判定器
+    css:
+      body {
+        text-align: center;
+        background: black;
+        color: white;
+        font-family: helvetica;
+      }
+      textarea {
+        border: 1px solid #B9C9CE;
+        border-radius:5px;
+        padding: 12px 0.8em;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+      }
+      input {
+        font-size: 1.4em;
+        font-weight: bold;
+        padding: 10px 30px;
+        color: #fff;
+        border-style: none;
+        box-shadow: 2px 2px 3px 1px #666;
+        -moz-box-shadow: 2px 2px 3px 1px #666;
+        -webkit-box-shadow: 2px 2px 3px 1px #666;
+        text-shadow: 1px 1px 2px #000;
+        background: -moz-linear-gradient(bottom, #36d, #248 50%, #36d);
+        background: -webkit-gradient(linear, left bottom, left top, from(#36d), color-stop(0.5, #248), to(#36d));
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+      }
+
+  body
+    h1
+      |新聞記事のカテゴリ判定するよ！
+    p
+      form action="/" method="post"
+        textarea name="text" rows=10 cols = 80
+          = @text
+        br
+        input type="submit" value="判定!"
+      - unless @result.nil?
+        h3
+          |この新聞記事は
+          font color="red"
+            = @result
+          |です！
