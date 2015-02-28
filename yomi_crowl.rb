@@ -5,44 +5,7 @@ require 'jubatus/classifier/client'
 
 LABELS = ["politics", "election", "national", "economy", "world", "sports", "science", "eco", "culture"]
 BASE_URL = "http://www.yomiuri.co.jp"
-URLS = [
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50059.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50043.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50058.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50057.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50056.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50052.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50053.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50045.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50035.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50039.html",
-        "http://www.yomiuri.co.jp/feature/matome/20150216-OYT8T50268.html",
-        "http://www.yomiuri.co.jp/feature/matome/20150216-OYT8T50268.html",
-        "http://www.yomiuri.co.jp/otona/yesno/20150221-OYT8T50000.html",
-        "http://www.yomiuri.co.jp/otona/travel/tamatebako/20150217-OYT8T50075.html",
-        "http://www.yomiuri.co.jp/atcars/news/20150216-OYT8T50083.html",
-        "http://www.yomiuri.co.jp/homeguide/feature/CO013592/20150216-OYT8T50230.html",
-        "http://www.yomiuri.co.jp/book/news/20150210-OYT8T50157.html",
-        "http://www.yomiuri.co.jp/culture/tv/tnews/20150205-OYT8T50129.html",
-        "http://www.yomiuri.co.jp/culture/news/20150212-OYT8T50218.html",
-        "http://www.yomiuri.co.jp/job/news/20150219-OYT8T50083.html",
-        "http://www.yomiuri.co.jp/culture/stage/trad/20150216-OYT8T50135.html",
-        "http://www.yomiuri.co.jp/culture/classic/clnews/02/20150203-OYT8T50148.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50059.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50043.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50058.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50057.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50056.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50052.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50053.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50045.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50035.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50039.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50057.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50051.html",
-        "http://www.yomiuri.co.jp/national/20150221-OYT1T50058.html",
-        "http://www.yomiuri.co.jp/atcars/sharaku/feature/mitsubishi/20150212-OYT8T50105.html"
-]
+URLS = File.open("urllist.txt", "r").read.split("\n")
 CACHE_DIR = "cache"
 
 def get_article(url)
@@ -102,7 +65,8 @@ $targets = URLS
 if File.exist?(CONTINUE)
   json = JSON.parse(File.read(CONTINUE))
   $visited = json["visited"]
-  $targets = json["targets"]
+  $targets = json["targets"].concat(URLS)
+  $targets -= $visited
 else
   $targets = URLS
   $visited = []
